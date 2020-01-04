@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Configure Data Sources -->
+	<bean id="datasource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+
+		<property name="url"
+			value="jdbc:sqlite:/home/radheshyamc/Documents/INSTALL/sqlite-tools-linux-x86-3300100/databases/mytest.db" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="datasource" />
+	</bean>
+
+	<bean id="studentDAO" class="com.rit.dao.StudentDAO">
+		<constructor-arg ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="studentService" class="com.rit.service.StudentService">
+		<constructor-arg ref="studentDAO" />
+	</bean>
+
+	<bean id="student" class="com.rit.controller.StudentController">
+		<property name="studentService" ref="studentService" />
+		<property name="methodNameResolver"
+			ref="myMethodNameResolver" />
+	</bean>
+
+	<bean name="myMethodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="manage" />
+	</bean>
+
+	<bean id="urlViewController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+	</bean>
+
+	<bean name="surl"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="managestudent.htm">urlViewController</prop>
+				<prop key="student.htm">student</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean name="irvr"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>
