@@ -1,0 +1,32 @@
+127.0.0.1:8080/emp-rest-demo/rest/emp/dummy   GET
+
+--
+
+127.0.0.1:8080/emp-rest-demo/rest/emp/create	POST
+{
+    "id": 101,
+    "name": "Radhe",
+    "createdDate": 1581930912859
+}
+
+--
+
+127.0.0.1:8080/emp-rest-demo/rest/emp/101	GET
+
+
+
+--
+
+
+127.0.0.1:8080/emp-rest-demo/rest/emps GET
+--
+
+127.0.0.1:8080/emp-rest-demo/rest/emp/delete/101 PUT
+---
+
+
+
+
+
+REF https://www.journaldev.com/2552/spring-rest-example-tutorial-spring-restful-web-services
+
